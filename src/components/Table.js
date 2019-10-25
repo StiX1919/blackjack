@@ -125,7 +125,7 @@ function Table(props) {
                             : <h1>You Win!!</h1>
                 : null
             }
-
+            {/*currenly routes player back to deck choice screen. can update later to rebuild/reshuffle deck */}
             {playerDone &&
                 <button onClick={reset}>NewGame</button>
             }

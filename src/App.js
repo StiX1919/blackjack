@@ -33,7 +33,7 @@ function App() {
     }
     setDeck(shuffledDeck)
   }
-  
+
   function play(){
     shuffle()
     setPlay(true)
@@ -44,6 +44,7 @@ function App() {
     <div className="App">
       {!playing 
         ? <div>
+            <h1 className='title'>BlackJack</h1>
             <p>Choose deck amount</p>
             <input type='number' value={count}onChange={event => build(event.target.value)}/>
             <button onClick={play}>Play</button>
