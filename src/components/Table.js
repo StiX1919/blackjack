@@ -7,6 +7,11 @@ function Table(props) {
         dealer: [],
         user: []
     })
+    let [score, setScore] = useState({
+        user: 0,
+        dealer: 0
+    })
+
 
     let [playerDone, setPlayerDone] = useState(false)
 
@@ -34,14 +39,24 @@ function Table(props) {
         props.setDeck(newDeck)
     }
 
-    function reset() {
+    function reset(userScore, dealScore) {
+        userTotal > dealerTotal 
+                    ? userTotal <= 21
+                        ? userTotal === 21 ? setScore({...score, user: score.user + 2}) : setScore({...score, user: score.user + 1})
+                        : setScore({...score, dealer: score.dealer + 1})
+                    : userTotal === dealerTotal 
+                        ? userTotal === 21 && setScore({user: score.user + 1, dealer: score.dealer + 1})
+                        : dealerTotal <= 21
+                            ? dealerTotal === 21 ? setScore({...score, dealer: score.dealer + 2}) : setScore({...score, dealer: score.dealer + 1})
+                            : setScore({...score, user: score.user + 1})
+
         setHands({
             dealer: [],
             user: []
         })
         setPlayerDone(false)
         //restarting game isn't replacing old deck
-        props.newGame(false)
+        // props.newGame(false)
     }
 
 
@@ -91,9 +106,16 @@ function Table(props) {
 
     return (
         <div className='table'>
-            <p>Dealer</p>
+            <div>
+                <h1>Score</h1>
+                <div>
+                    <p>User: {score.user}</p>
+                    <p>Dealer: {score.dealer}</p>
+                </div>
+            </div>
             <span className='card flipped'></span>
-
+        
+            <p>Dealer</p>
             {!hands.dealer[0] &&<button onClick={startGame}>Deal</button>}
             
             <div className='dealer'>
@@ -103,8 +125,8 @@ function Table(props) {
 
             <div className='options'>
                 {/*wont show buttons unless hands have been dealt */}
-                {hands.user[0] && userTotal < 21 && <button onClick={() => hit('user')}>Hit</button>}
-                {hands.user[0] && userTotal < 21 && <button onClick={() => setPlayerDone(true)}>Stay</button>}
+                {hands.user[0] && !playerDone && userTotal < 21 && <button onClick={() => hit('user')}>Hit</button>}
+                {hands.user[0] && !playerDone && userTotal < 21 && <button onClick={() => setPlayerDone(true)}>Hold</button>}
             </div>
 
             <div className='player'>
@@ -122,14 +144,14 @@ function Table(props) {
                         : <h1>bust...</h1>
                     : userTotal === dealerTotal 
                         ? <h1>Push</h1>
-                        : dealerTotal < 21
+                        : dealerTotal <= 21
                             ? <h1>Lose...</h1>
                             : <h1>You Win!!</h1>
                 : null
             }
             {/*currenly routes player back to deck choice screen. can update later to rebuild/reshuffle deck */}
             {playerDone &&
-                <button onClick={reset}>NewGame</button>
+                <button onClick={() => reset(userTotal, dealerTotal)}>NewGame</button>
             }
         </div>
     );
