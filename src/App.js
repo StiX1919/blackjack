@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  let [suit, updateSuit] = useState([2,3,4,5,6,7,8,9,10,'J','Q','K','A'])
+  let [deck, createDeck] = useState([])
+
+
+
   return (
     <div className="App">
       <header className="App-header">
