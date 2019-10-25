@@ -25,7 +25,7 @@ function App() {
   }
 
   function shuffle() {
-    //borrowed fisher yates shuffle for better results
+    //borrowed fisher yates shuffle for better mix rates
     const shuffledDeck = deck.slice()
     for (let i = shuffledDeck.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
@@ -33,6 +33,7 @@ function App() {
     }
     setDeck(shuffledDeck)
   }
+  
   function play(){
     shuffle()
     setPlay(true)
@@ -47,9 +48,9 @@ function App() {
             <input type='number' value={count}onChange={event => build(event.target.value)}/>
             <button onClick={play}>Play</button>
           </div>
-
-        : <Table deck={deck} setDeck={setDeck} newGame={setPlay}/>
-      }
+          : <Table deck={deck} setDeck={setDeck} newGame={setPlay}/>
+        }
+        {/* if i don't send the setPlay function back i can play more rounds with the old deck. but deck reset wasn't working properly.*/}
       
     </div>
   );

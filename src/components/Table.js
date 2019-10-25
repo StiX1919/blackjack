@@ -100,8 +100,9 @@ function Table(props) {
             <h1>{playerDone && dealerTotal}</h1>
 
             <div className='options'>
-                {userTotal < 21 && <button onClick={() => hit('user')}>Hit</button>}
-                {userTotal < 21 && <button onClick={() => setPlayerDone(true)}>Stay</button>}
+                {/*wont show buttons unless hands have been dealt */}
+                {hands.user[0] && userTotal < 21 && <button onClick={() => hit('user')}>Hit</button>}
+                {hands.user[0] && userTotal < 21 && <button onClick={() => setPlayerDone(true)}>Stay</button>}
             </div>
 
             <div className='player'>
@@ -111,7 +112,7 @@ function Table(props) {
             </div>
             <h1>{userTotal > 0 && userTotal}</h1>
 
-
+                {/*conditional for checking winner. A little nasty. May move into a function to be run on game completion later.*/}
             {playerDone ?
                 userTotal > dealerTotal 
                     ? userTotal <= 21
