@@ -19,6 +19,7 @@ function App() {
         for(let count = 0; count < value * 4; count++){
           newDeck = [...newDeck, ...suit]
         }
+        console.log(newDeck)
         //this will update how many decks are involved and create them
         setDeck(newDeck)
   }
@@ -47,7 +48,7 @@ function App() {
             <button onClick={play}>Play</button>
           </div>
 
-        : <Table deck={deck} setDeck={setDeck}/>
+        : <Table deck={deck} setDeck={setDeck} newGame={setPlay}/>
       }
       
     </div>

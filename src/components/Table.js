@@ -35,6 +35,18 @@ function Table(props) {
         props.setDeck(newDeck)
     }
 
+    function reset() {
+        setHands({
+            dealer: [],
+            user: []
+        })
+        setPlayerDone(false)
+        //restarting game isn't replacing old deck
+        props.newGame(false)
+    }
+
+
+
     let dealerCards = playerDone 
         ? hands.dealer.map((card, i) => {
             return <span className='card'>{card}</span>
@@ -69,6 +81,8 @@ function Table(props) {
         } else acc += curr
         return acc
     }, 0)
+
+    userTotal >= 21 && playerDone === false && setPlayerDone(true)
     playerDone && dealerTotal < 17 && hit('dealer')
 
 
@@ -76,7 +90,7 @@ function Table(props) {
     return (
         <div className='table'>
             <p>Dealer</p>
-            <span className='card'></span>
+            <span className='card'>{props.deck.length}</span>
 
             {!hands.dealer[0] &&<button onClick={startGame}>Deal</button>}
             
@@ -97,6 +111,23 @@ function Table(props) {
             </div>
             <h1>{userTotal > 0 && userTotal}</h1>
 
+
+            {playerDone ?
+                userTotal > dealerTotal 
+                    ? userTotal <= 21
+                        ? <h1>You Win!!</h1>
+                        : <h1>bust...</h1>
+                    : userTotal === dealerTotal 
+                        ? <h1>Push</h1>
+                        : dealerTotal < 21
+                            ? <h1>Lose...</h1>
+                            : <h1>You Win!!</h1>
+                : null
+            }
+
+            {playerDone &&
+                <button onClick={reset}>NewGame</button>
+            }
         </div>
     );
 }
