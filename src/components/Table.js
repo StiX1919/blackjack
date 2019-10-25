@@ -54,7 +54,7 @@ function Table(props) {
         : hands.dealer.map((card, i) => {
             if(i === 0){
                 return <span className='card'>{card}</span>
-            } else return <span className='card'></span>
+            } else return <span className='card flipped'></span>
         })
 
     let userTotal = hands.user.reduce((acc, curr, ind) => {
@@ -90,7 +90,7 @@ function Table(props) {
     return (
         <div className='table'>
             <p>Dealer</p>
-            <span className='card'>{props.deck.length}</span>
+            <span className='card flipped'></span>
 
             {!hands.dealer[0] &&<button onClick={startGame}>Deal</button>}
             
