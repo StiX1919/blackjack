@@ -25,10 +25,10 @@ function Table(props) {
         // console.log(props.deck, firstDealHand)
     }
 
-    function hit(){
+    function hit(player){
         setHands({
             ...hands,
-            user: [...hands.user, props.deck[0]]
+            [player]: [...hands[player], props.deck[0]]
         })
         let newDeck = props.deck.slice()
         newDeck.shift()
@@ -56,6 +56,8 @@ function Table(props) {
         } else acc += curr
         return acc
     }, 0)
+
+
     let dealerTotal = hands.dealer.reduce((acc, curr, ind) => {
         let faces = ['J', 'Q', 'K']
         if(faces.includes(curr)){
@@ -67,7 +69,7 @@ function Table(props) {
         } else acc += curr
         return acc
     }, 0)
-
+    playerDone && dealerTotal < 17 && hit('dealer')
 
 
 
@@ -81,9 +83,10 @@ function Table(props) {
             <div className='dealer'>
                 {dealerCards}
             </div>
+            <h1>{playerDone && dealerTotal}</h1>
 
             <div className='options'>
-                {userTotal < 21 && <button onClick={hit}>Hit</button>}
+                {userTotal < 21 && <button onClick={() => hit('user')}>Hit</button>}
                 {userTotal < 21 && <button onClick={() => setPlayerDone(true)}>Stay</button>}
             </div>
 
