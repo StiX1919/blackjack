@@ -22,7 +22,6 @@ function Table(props) {
         })
         updateDeck.splice(0, 4)
         setDeck(updateDeck)
-        // console.log(props.deck, firstDealHand)
     }
 
     function hit(player){
@@ -71,6 +70,7 @@ function Table(props) {
 
 
     let dealerTotal = hands.dealer.reduce((acc, curr, ind) => {
+        //problem with aces not counting correct all the time. will need to sort hands to keep A's at the end of the array
         let faces = ['J', 'Q', 'K']
         if(faces.includes(curr)){
             acc += 10
@@ -82,6 +82,8 @@ function Table(props) {
         return acc
     }, 0)
 
+
+    //on rerender it will check values and update automatically
     userTotal >= 21 && playerDone === false && setPlayerDone(true)
     playerDone && dealerTotal < 17 && hit('dealer')
 
